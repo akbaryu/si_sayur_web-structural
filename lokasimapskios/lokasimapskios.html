@@ -1,0 +1,83 @@
+<html>
+    <head>
+
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map_canvas { height: 100% }
+</style>
+<script type="text/javascript"
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCpM6lBSseCJKiMxwHT5dkVJvERtyCA9tE&sensor=false">
+</script>
+<script type="text/javascript">
+
+var locations = [
+  ['PUSAT KOPERASI PRIMER RAKYAT', -8.0899272,112.6342268, 'Jl. Raya Krebet No. 23 Bululawang, Malang'],
+  ['PUSAT KPTR MAJU BERSAMA', -7.9513856,112.6882259, 'Jl. Abd. Rahman Saleh No. 15, Pakis, Malang'],
+  ['CV. AGRO SUMBER MAKMUR', -8.1800437,112.6382973, 'Jl. Pang. Sudirman No. 37B Gondanglegi, Malang'],
+  ['PT. EKA MATRA TANI', -7.9907881,112.6099494, 'Gedung Yosindo Lt.5 Jl. Rajawali 84 Malang'],
+  ['PT. HIMIKARTA', -7.9812877,112.6320043, 'Jl. Aris Munandar No. 53 Malang'],
+  ['PT. GCS', -7.9386794,112.6415219, 'Gedung Graha Sarana Lt.6 Jl. A. Yani Malang']
+  ];
+
+  function initialize() {
+
+    var myOptions = {
+      center: new google.maps.LatLng(-8.1800437,112.6382973),
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+
+    };
+    var map = new google.maps.Map(document.getElementById("default"),
+        myOptions);
+
+    setMarkers(map,locations)
+
+  }
+
+
+
+  function setMarkers(map,locations){
+
+      var marker, i
+
+for (i = 0; i < locations.length; i++)
+ {  
+
+ var loan = locations[i][0]
+ var lat = locations[i][1]
+ var long = locations[i][2]
+ var add =  locations[i][3]
+
+ latlngset = new google.maps.LatLng(lat, long);
+
+  var marker = new google.maps.Marker({  
+          map: map, title: loan , position: latlngset  
+        });
+        map.setCenter(marker.getPosition())
+
+
+        var content = "Nama Toko: " + loan +  '</h3>' + " | Alamat: " + add     
+
+  var infowindow = new google.maps.InfoWindow()
+
+google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+        return function() {
+           infowindow.setContent(content);
+           infowindow.open(map,marker);
+        };
+    })(marker,content,infowindow)); 
+
+  }
+  }
+
+
+  </script>
+ </head>
+ <body onload="initialize()">
+  <div id="default" style="width:100%; height:100%"></div>
+ </body>
+  </html>
+
+  
+
